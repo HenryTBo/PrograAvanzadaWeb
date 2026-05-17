@@ -7,12 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Reglas\" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.3.10" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
+    <ProjectReference Include="..\Abstracciones\Abstracciones.csproj" />
   </ItemGroup>
 
 </Project>
