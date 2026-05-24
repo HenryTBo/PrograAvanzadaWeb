@@ -19,22 +19,25 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO [dbo].[Vehiculo]
-           ([Id]
-           ,[IdModelo]
-           ,[Placa]
-           ,[Color]
-           ,[Anio]
-           ,[Precio]
-           ,[CorreoPropietario]
-           ,[TelefonoPropietario])
-     VALUES
-           (@Id
-           ,@IdModelo
-           ,@Placa
-           ,@Color
-           ,@Anio
-           ,@Precio
-           ,@CorreoPropietario
-           ,@TelefonoPropietario)
+    BEGIN TRANSACTION
+	    INSERT INTO [dbo].[Vehiculo]
+               ([Id]
+               ,[IdModelo]
+               ,[Placa]
+               ,[Color]
+               ,[Anio]
+               ,[Precio]
+               ,[CorreoPropietario]
+               ,[TelefonoPropietario])
+         VALUES
+               (@Id
+               ,@IdModelo
+               ,@Placa
+               ,@Color
+               ,@Anio
+               ,@Precio
+               ,@CorreoPropietario
+               ,@TelefonoPropietario)
+    SELECT @Id
+    COMMIT TRANSACTION
 END

@@ -12,7 +12,10 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	DELETE
-	FROM   Vehiculo 
-	WHERE (Id = @Id)
+	BEGIN TRANSACTION 
+		DELETE
+		FROM   Vehiculo 
+		WHERE (Id = @Id)
+	SELECT @Id
+	COMMIT TRANSACTION
 END

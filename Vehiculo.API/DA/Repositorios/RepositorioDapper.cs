@@ -17,7 +17,7 @@ namespace DA.Repositorios
 
         public SqlConnection ObtenerRepositorio()
         {
-            throw new NotImplementedException();
+            return _conexionBaseDatos;
         }
     }
 }

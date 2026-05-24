@@ -15,27 +15,27 @@ namespace Flujo
 
         public Task<Guid> Agregar(VehiculoRequest vehiculo)
         {
-            throw new NotImplementedException();
+            return _vehiculoDA.Agregar(vehiculo);
         }
 
         public Task<Guid> Editar(Guid Id, VehiculoRequest vehiculo)
         {
-            throw new NotImplementedException();
+            return _vehiculoDA.Editar(Id, vehiculo);
         }
 
         public Task<Guid> Elimiar(Guid Id)
         {
-            throw new NotImplementedException();
+            return _vehiculoDA.Elimiar(Id);
         }
 
         public Task<IEnumerable<VehiculoResponse>> Obtener()
         {
-            throw new NotImplementedException();
+            return _vehiculoDA.Obtener();
         }
 
         public Task<VehiculoResponse> Obtener(Guid Id)
         {
-            throw new NotImplementedException();
+            return _vehiculoDA.Obtener(Id);
         }
     }
 }

@@ -17,29 +17,37 @@ namespace API.Controllers
             _vehiculoFlujo = vehiculoFlujo;
             _logger = logger;
         }
-        public Task<IActionResult> Agregar(VehiculoRequest vehiculo)
+        [HttpPost]
+        public async Task<IActionResult> Agregar(VehiculoRequest vehiculo)
         {
-            throw new NotImplementedException();
+            var resultado = await _vehiculoFlujo.Agregar(vehiculo);
+            return CreatedAtAction(nameof(Obtener), new {Id = resultado},null);
         }
-
-        public Task<IActionResult> Editar(Guid Id, VehiculoRequest vehiculo)
+        [HttpPut("{Id}")]
+        public async Task<IActionResult> Editar(Guid Id, VehiculoRequest vehiculo)
         {
-            throw new NotImplementedException();
+            var resultado = await _vehiculoFlujo.Editar(Id, vehiculo);
+            return Ok(resultado);
         }
-
-        public Task<IActionResult> Elimiar(Guid Id)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Elimiar(Guid Id)
         {
-            throw new NotImplementedException();
+            var resultado = await _vehiculoFlujo.Elimiar(Id);
+            return NoContent();
         }
-
-        public Task<IActionResult> Obtener()
+        [HttpGet]
+        public async Task<IActionResult> Obtener()
         {
-            throw new NotImplementedException();
+            var resultado = await _vehiculoFlujo.Obtener();
+            if (!resultado.Any())
+                return NoContent();
+            return Ok(resultado);
         }
-
-        public Task<IActionResult> Obtener(Guid Id)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Obtener(Guid Id)
         {
-            throw new NotImplementedException();
+            var resultado = await _vehiculoFlujo.Obtener(Id);
+            return Ok(resultado);
         }
     }
 }

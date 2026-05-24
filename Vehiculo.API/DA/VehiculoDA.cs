@@ -1,5 +1,6 @@
 ﻿using Abstracciones.Interfaces.DA;
 using Abstracciones.Modelos;
+using Dapper;
 using Microsoft.Data.SqlClient;
 
 namespace DA
@@ -14,29 +15,75 @@ namespace DA
             _repositorioDapper = repositorioDapper;
             _sqlConnection = _repositorioDapper.ObtenerRepositorio();
         }
-        public Task<Guid> Agregar(VehiculoRequest vehiculo)
+        public async Task<Guid> Agregar(VehiculoRequest vehiculo)
         {
-            throw new NotImplementedException();
+            string query = @"AgregarVehiculo";
+            var resultadoConsulta = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new 
+            {
+                Id = Guid.NewGuid(),
+                IdModelo = vehiculo.IdModelo,
+                Placa = vehiculo.Placa,
+                Color = vehiculo.Color,
+                Anio = vehiculo.Anio,
+                Precio = vehiculo.Precio,
+                CorreoPropietario = vehiculo.CorreoPropietario,
+                TelefonoPropietario = vehiculo.TelefonoPropietario
+            });
+            return resultadoConsulta;
         }
 
-        public Task<Guid> Editar(Guid Id, VehiculoRequest vehiculo)
+        public async Task<Guid> Editar(Guid Id, VehiculoRequest vehiculo)
         {
-            throw new NotImplementedException();
+            await verificarVehiculoExiste(Id);
+            string query = @"EditarVehiculo";
+            var resultadoConsulta = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
+            {
+                Id = Id,
+                IdModelo = vehiculo.IdModelo,
+                Placa = vehiculo.Placa,
+                Color = vehiculo.Color,
+                Anio = vehiculo.Anio,
+                Precio = vehiculo.Precio,
+                CorreoPropietario = vehiculo.CorreoPropietario,
+                TelefonoPropietario = vehiculo.TelefonoPropietario
+            });
+            return resultadoConsulta;
+
         }
 
-        public Task<Guid> Elimiar(Guid Id)
+        public async Task<Guid> Elimiar(Guid Id)
         {
-            throw new NotImplementedException();
+            await verificarVehiculoExiste(Id);
+            string query = @"EliminarVehiculo";
+            var resultadoConsulta = await _sqlConnection.ExecuteScalarAsync<Guid>(query, new
+            {
+                Id = Id
+            });
+            return resultadoConsulta;
         }
 
-        public Task<IEnumerable<VehiculoResponse>> Obtener()
+        public async Task<IEnumerable<VehiculoResponse>> Obtener()
         {
-            throw new NotImplementedException();
+            string query = @"ObtenerVehiculos";
+            var resultadoConsulta = await _sqlConnection.QueryAsync<VehiculoResponse>(query);
+            return resultadoConsulta;
         }
 
-        public Task<VehiculoResponse> Obtener(Guid Id)
+        public async Task<VehiculoResponse> Obtener(Guid Id)
         {
-            throw new NotImplementedException();
+            string query = @"ObtenerVehiculo";
+            var resultadoConsulta = await _sqlConnection.QueryAsync<VehiculoResponse>(query, new
+            {
+                Id= Id
+            });
+            return resultadoConsulta.FirstOrDefault();
+        }
+
+        private async Task verificarVehiculoExiste(Guid Id)
+        {
+            VehiculoResponse? resultadoConsultaVehiculo = await Obtener(Id);
+            if (resultadoConsultaVehiculo == null)
+                throw new Exception("No se encontro vehiculo");
         }
     }
 }

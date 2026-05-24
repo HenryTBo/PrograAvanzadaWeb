@@ -19,13 +19,16 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-    UPDATE [dbo].[Vehiculo]
-	SET [IdModelo] = @IdModelo
-       ,[Placa] = @Placa
-       ,[Color] = @Color
-       ,[Anio] = @Anio
-       ,[Precio] = @Precio
-       ,[CorreoPropietario] = @CorreoPropietario
-       ,[TelefonoPropietario] = @TelefonoPropietario
-     WHERE Id = @Id
+    BEGIN TRANSACTION
+        UPDATE [dbo].[Vehiculo]
+	    SET [IdModelo] = @IdModelo
+           ,[Placa] = @Placa
+           ,[Color] = @Color
+           ,[Anio] = @Anio
+           ,[Precio] = @Precio
+           ,[CorreoPropietario] = @CorreoPropietario
+           ,[TelefonoPropietario] = @TelefonoPropietario
+         WHERE Id = @Id
+     SELECT @Id
+     COMMIT TRANSACTION 
 END
