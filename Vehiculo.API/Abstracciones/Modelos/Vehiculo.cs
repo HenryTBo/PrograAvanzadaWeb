@@ -33,4 +33,9 @@ namespace Abstracciones.Modelos
         public string Modelo { get; set; }
         public string Marca { get; set; }
     }
+    public class VehiculoDetalle : VehiculoResponse
+    {
+        public bool RevisionValida { get; set; }
+        public bool RegistroValido { get; set; }
+    }
 }
